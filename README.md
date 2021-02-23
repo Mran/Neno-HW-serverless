@@ -9,7 +9,7 @@ neno 服务端
 ### 添加文件 mongoconfig.js
 
 写入以下内容,填上自己的数据
-
+**mongodb的数据库名为需neno**
 ```
 //mongodb的链接
 exports.mongoUrl = "";
@@ -47,7 +47,7 @@ exports.qiniuSK=""
 }
 
 ```
-**mongoUrl** mongodb 的链接 
+**mongoUrl** mongodb 的链接  **mongodb的数据库名为需neno**
 
 **qiniuAK** 七牛云的AK
 
