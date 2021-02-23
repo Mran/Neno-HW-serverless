@@ -70,3 +70,7 @@ exports.qiniuSK=""
 执行 **hw_serverless_dev.exe**
 
  **hw_serverless_dev.exe**由hw_serverless_dev文件夹下的go代码打包而成.你也可以自行打包.
+ 
+=============
+# License
+GPL 
