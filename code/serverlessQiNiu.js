@@ -1,6 +1,6 @@
 var qiniu = require("qiniu")
 
-async function exec(body, qiuAK, qiuSK) {
+async function exec(client,body, qiuAK, qiuSK) {
     var options = {
         scope: "fmolo",
         expires: 30
@@ -32,7 +32,8 @@ exports.handler = async (event, context) => {
         out = await exec(da, qiniuAK, qiniuSK)
     }
 
-    const output =
+    client.close()
+const output =
     {
         'statusCode': 200,
         'headers':

@@ -1,14 +1,14 @@
 var mongodb = require("mongodb")
 
-async function exec(body, url = "") {
+async function exec(client,body, url = "") {
     if (body._id == undefined || body._id == "") {
         return {
             code: 400,
             message: "_id不能为空"
         }
     }
-    let client = await mongodb.MongoClient.connect(url);
-    var db = client.db("neno");
+    
+    var db = client.db("flomo");
     var collection = db.collection("neno");
    
     let nenoId = mongodb.ObjectId.createFromHexString(body._id)
@@ -25,7 +25,7 @@ async function exec(body, url = "") {
         }
         query = { parentId: nenoId };
         let childrenResult = collection.find(query);
-        let childrenArray = await childrenResult.toArray()
+        let childrenArray = await childrenReult.toArray()
         for (let index = 0; index < childrenArray.length; index++) {
             let element = childrenArray[index];
             query = { parentId: element._id };
@@ -36,7 +36,7 @@ async function exec(body, url = "") {
         result.children = childrenArray
     }
 
-    client.close()
+    
 
     return {
         code: 200,
@@ -50,14 +50,17 @@ exports.handler = async (event, context) => {
     let out = {}
     console.log(event.body);
     let mongodb_url = context.getUserData('mongodb_url')
+let client = await mongodb.MongoClient.connect(mongodb_url);
+
     if (event.body == "") {
-        out = await exec({}, mongodb_url)
+        out = await exec(clientclient,{}, mongodb_url)
     } else {
         let da = JSON.parse(Buffer.from(event.body, 'base64'))
-        out = await exec(da, mongodb_url)
+        out = await exec(client,da, mongodb_url)
     }
 
-    const output =
+    client.close()
+const output =
     {
         'statusCode': 200,
         'headers':

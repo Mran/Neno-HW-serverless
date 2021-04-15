@@ -1,13 +1,13 @@
 var mongodb = require("mongodb")
 
-async function exec(body, url = "") {
+async function exec(client,body, url = "") {
 
-    let client = await mongodb.MongoClient.connect(url);
+    
     var db = client.db("flomo");
     var collection = db.collection("neno_pin_tags");
     let result = collection.find()
     let pinsList=await result.toArray()
-    client.close()
+    
 
     return {
         code: 200,
@@ -20,15 +20,18 @@ exports.handler = async (event, context) => {
     let out = {}
     console.log(event.body);
     let mongodb_url = context.getUserData('mongodb_url')
+let client = await mongodb.MongoClient.connect(mongodb_url);
+
     if (event.body == "") {
-        out = await exec({}, mongodb_url)
+        out = await exec(clientclient,{}, mongodb_url)
     } else {
         let da = JSON.parse(Buffer.from(event.body, 'base64'))
 
-        out = await exec(da, mongodb_url)
+        out = await exec(client,da, mongodb_url)
     }
 
-    const output =
+    client.close()
+const output =
     {
         'statusCode': 200,
         'headers':

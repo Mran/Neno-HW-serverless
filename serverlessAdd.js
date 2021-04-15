@@ -1,15 +1,15 @@
 var mongodb = require("mongodb")
 var dayjs = require("dayjs");
 
-async function exec(body, url = "") {
+async function exec(client,body, url = "") {
     if (body.content == undefined || body.content == "") {
         return {
             code: 400,
             message: "内容不能为空"
         }
     }
-    let client = await mongodb.MongoClient.connect(url);
-    var db = client.db("neno");
+    
+    var db = client.db("flomo");
     var collection = db.collection("neno");
 
 
@@ -27,7 +27,7 @@ async function exec(body, url = "") {
         }
         var result = await collection.findOneAndReplace({ _id: mongodb.ObjectId.createFromHexString(id) }, body);
         body._id = id
-        client.close()
+        
         return {
             code: 200,
             message: "BIU",
@@ -61,7 +61,7 @@ async function exec(body, url = "") {
             body.children = []
             if (parentResult != undefined) {
                 body.parent = parentResult
-                client.close()
+                
             }
             return {
                 code: 200,
@@ -70,7 +70,7 @@ async function exec(body, url = "") {
             }
         } else {
             console.log(result);
-            client.close()
+            
             return {
                 code: 400,
                 message: "添加失败",
@@ -85,15 +85,18 @@ exports.handler = async (event, context) => {
     let out = {}
     console.log(event.body);
     let mongodb_url = context.getUserData('mongodb_url')
+let client = await mongodb.MongoClient.connect(mongodb_url);
+
     if (event.body == "") {
-        out = await exec({}, mongodb_url)
+        out = await exec(clientclient,{}, mongodb_url)
     } else {
         let da = JSON.parse(Buffer.from(event.body, 'base64'))
 
-        out = await exec(da, mongodb_url)
+        out = await exec(client,da, mongodb_url)
     }
 
-    const output =
+    client.close()
+const output =
     {
         'statusCode': 200,
         'headers':

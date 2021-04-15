@@ -2,3 +2,5 @@
 node_modules
 mongoconfig.js
 serverless.conf
+rtfparse.js
+example.rtf
