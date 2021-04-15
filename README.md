@@ -9,7 +9,7 @@ neno 服务端
 ### 添加文件 mongoconfig.js
 
 写入以下内容,填上自己的数据
-
+**mongodb的数据库名为需neno**
 ```
 //mongodb的链接
 exports.mongoUrl = "";
@@ -47,7 +47,7 @@ exports.qiniuSK=""
 }
 
 ```
-**mongoUrl** mongodb 的链接 
+**mongoUrl** mongodb 的链接  **mongodb的数据库名为需neno**
 
 **qiniuAK** 七牛云的AK
 
@@ -70,3 +70,7 @@ exports.qiniuSK=""
 执行 **hw_serverless_dev.exe**
 
  **hw_serverless_dev.exe**由hw_serverless_dev文件夹下的go代码打包而成.你也可以自行打包.
+ 
+=============
+# License
+GPL 
